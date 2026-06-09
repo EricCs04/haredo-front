@@ -2,15 +2,19 @@ import { createContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {jwtDecode} from 'jwt-decode';
 
+type Role = 'user' | 'ong_admin' | 'ong_validator';
+
 type JwtPayload = {
   sub: string;
   email: string;
-  role: 'user' | 'ong_admin';
+  role: Role;
+  ongId?: string;
 };
 type User = {
   id: string;
   email: string;
-  role: 'user' | 'ong_admin';
+  role: Role;
+  ongId?: string;
 };
 
 
@@ -36,6 +40,7 @@ export const AuthProvider = ({ children }: any) => {
         id: decoded.sub,
         email: decoded.email,
         role: decoded.role,
+        ongId: decoded.ongId,
       });
     } else {
       await AsyncStorage.removeItem('token');
@@ -56,6 +61,7 @@ export const AuthProvider = ({ children }: any) => {
           id: decoded.sub,
           email: decoded.email,
           role: decoded.role,
+          ongId: decoded.ongId,
         });
 
         setTokenState(stored);

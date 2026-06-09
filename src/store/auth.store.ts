@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { JwtPayload, User } from '../types/auth';
 
 export const saveToken = async (token: string) => {
   await AsyncStorage.setItem('token', token);
